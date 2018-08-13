@@ -196,6 +196,19 @@ exports.convert = function (/* overloaded */) {
          }).extend(params));
       break;
 
+      case 'split':
+         params = helpers.objectToArray(_({
+            '-i': file,
+            '-segment_time': '2',
+            '-g': '60',
+            '-sc_threshold': '0',
+            '-force_key_frames': 'expr:gte(t,n_forced*60)',
+            '-f': 'segment',
+            '-preset': 'veryfast',
+            '-y': output
+         }).extend(params));
+      break;
+
       case 'png':
          params = helpers.objectToArray(_({
             '-i': file,
@@ -275,6 +288,16 @@ exports.m4a = function (/* overloaded */) {
 exports.png = function () {
     var unshift = Array.prototype.unshift;
     unshift.call(arguments, 'png');
+
+    this.convert.apply(this, arguments);
+}
+
+/**
+ * Segment video into small chunks(2s)
+ */
+exports.split = function () {
+    var unshift = Array.prototype.unshift;
+    unshift.call(arguments, 'split');
 
     this.convert.apply(this, arguments);
 }
