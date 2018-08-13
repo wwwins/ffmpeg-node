@@ -193,6 +193,15 @@ exports.convert = function (/* overloaded */) {
             '-y': output
          }).extend(params));
       break;
+
+      case 'png':
+         params = helpers.objectToArray(_({
+            '-i': file,
+            '-vf': '',
+            'fps': '1/10',
+            '-y': output
+         }).extend(params));
+      break;
    }
 
    
@@ -257,6 +266,16 @@ exports.m4a = function (/* overloaded */) {
    this.convert.apply(this, arguments);
 
 };
+
+/**
+ * Take a picture every 10 frames
+ */
+exports.png = function () {
+    var unshift = Array.prototype.unshift;
+    unshift.call(arguments, 'png');
+
+    this.convert.apply(this, arguments);
+}
 
 /*
 *  The function takes a absolute file path and returns a meta data object
